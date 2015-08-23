@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"io/ioutil"
 	"net/http"
 	"html/template"
@@ -115,5 +116,8 @@ func main() {
 	http.HandleFunc("/save/", makeHandler(saveHandler))
 	http.HandleFunc("/", renderHome)
 
-	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":" + os.Getenv("PORT"), nil)
+	if err != nil {
+		panic(err)
+	}
 }
