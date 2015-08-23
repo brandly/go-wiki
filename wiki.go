@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"io/ioutil"
 	"net/http"
@@ -8,6 +9,8 @@ import (
 	"bytes"
 	"regexp"
 	"errors"
+	"github.com/microcosm-cc/bluemonday"
+	"github.com/russross/blackfriday"
 )
 
 type Page struct {
@@ -15,9 +18,17 @@ type Page struct {
 	Body []byte
 }
 
+func markdowner(args ...interface{}) template.HTML {
+	unsafe := blackfriday.MarkdownCommon([]byte(fmt.Sprintf("%s", args...)))
+	html := bluemonday.UGCPolicy().SanitizeBytes(unsafe)
+	return template.HTML(html)
+}
+
+var templateFuncs = template.FuncMap{"markdown": markdowner}
+
 var templates = map[string]*template.Template {
-	"edit": template.Must(template.ParseFiles("tmpl/edit.html", "tmpl/layout.html")),
-	"view": template.Must(template.ParseFiles("tmpl/view.html", "tmpl/layout.html")),
+	"edit": template.Must(template.New("edit").Funcs(templateFuncs).ParseFiles("tmpl/edit.html", "tmpl/layout.html")),
+	"view": template.Must(template.New("view").Funcs(templateFuncs).ParseFiles("tmpl/view.html", "tmpl/layout.html")),
 }
 
 var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$")

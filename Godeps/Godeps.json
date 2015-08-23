@@ -1,5 +1,23 @@
 {
 	"ImportPath": "github.com/brandly/go-wiki",
 	"GoVersion": "go1.5",
-	"Deps": []
+	"Deps": [
+		{
+			"ImportPath": "github.com/microcosm-cc/bluemonday",
+			"Rev": "2b7763a06cb6d740966c9a8e6a001eee9679be0e"
+		},
+		{
+			"ImportPath": "github.com/russross/blackfriday",
+			"Comment": "v1.2-80-g8cec3a8",
+			"Rev": "8cec3a854e68dba10faabbe31c089abf4a3e57a6"
+		},
+		{
+			"ImportPath": "github.com/shurcooL/sanitized_anchor_name",
+			"Rev": "244f5ac324cb97e1987ef901a0081a77bfd8e845"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html",
+			"Rev": "66f0418ca41253f8d1a024eb9754e9441a8e79b9"
+		}
+	]
 }
