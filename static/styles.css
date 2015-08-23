@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   color: #444;
 }
@@ -10,9 +14,17 @@ textarea {
 }
 
 .container {
+  position: relative;
   width: 700px;
   max-width: 100%;
   margin: 0 auto;
+  padding: 0 0.5rem;
+}
+
+.edit-page-textarea {
+  height: 300px;
+  width: 100%;
+  max-width: 100%;
 }
 
 .button {
