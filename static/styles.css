@@ -1,3 +1,7 @@
+body {
+  color: #444;
+}
+
 textarea {
   padding: 0.7rem;
   outline: none;
@@ -26,4 +30,13 @@ textarea {
 
 .button:hover {
   border-color: #AAA;
+}
+
+.edit-link {
+  color: #CCC;
+}
+
+.edit-link a {
+  text-decoration: none;
+  color: #2085AB;
 }
