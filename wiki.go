@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"html/template"
+	"bytes"
 	"regexp"
 	"errors"
 )
@@ -31,7 +32,8 @@ func getTitle(w http.ResponseWriter, r *http.Request) (string, error) {
 
 func (p *Page) save() error {
 	filename := "data/" + p.Title + ".txt"
-	return ioutil.WriteFile(filename, p.Body, 0600)
+	body := bytes.TrimSpace(p.Body)
+	return ioutil.WriteFile(filename, body, 0600)
 }
 
 func loadPage(title string) (*Page, error) {
