@@ -96,13 +96,22 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
 }
 
 func renderHome(w http.ResponseWriter, r *http.Request) {
-	viewHandler(w, r, "FrontPage")
+	if r.URL.Path == "/" {
+		viewHandler(w, r, "FrontPage")
+	} else {
+		http.NotFound(w, r)
+		return
+	}
 }
 
 func main() {
+	fs := http.FileServer(http.Dir("static"))
+  http.Handle("/static/", http.StripPrefix("/static/", fs))
+
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/edit/", makeHandler(editHandler))
 	http.HandleFunc("/save/", makeHandler(saveHandler))
 	http.HandleFunc("/", renderHome)
+
 	http.ListenAndServe(":8080", nil)
 }
