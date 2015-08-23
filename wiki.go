@@ -13,7 +13,11 @@ type Page struct {
 	Body []byte
 }
 
-var templates = template.Must(template.ParseFiles("tmpl/edit.html", "tmpl/view.html"))
+var templates = map[string]*template.Template {
+	"edit": template.Must(template.ParseFiles("tmpl/edit.html", "tmpl/layout.html")),
+	"view": template.Must(template.ParseFiles("tmpl/view.html", "tmpl/layout.html")),
+}
+
 var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$")
 
 func getTitle(w http.ResponseWriter, r *http.Request) (string, error) {
@@ -72,7 +76,7 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
-	err := templates.ExecuteTemplate(w, tmpl + ".html", p)
+	err := templates[tmpl].ExecuteTemplate(w, "layout", p)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
