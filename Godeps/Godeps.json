@@ -1,0 +1,5 @@
+{
+	"ImportPath": "github.com/brandly/go-wiki",
+	"GoVersion": "go1.5",
+	"Deps": []
+}
